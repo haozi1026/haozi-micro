@@ -1,6 +1,6 @@
 package support.cache.redis;
 
-import com.haozi.common.dto.account.AccountInfo;
+import com.haozi.common.model.dto.account.AccountInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package support.cache.account;
 
 import cn.hutool.core.util.StrUtil;
-import com.haozi.common.dto.account.AccountInfo;
+import com.haozi.common.model.dto.account.AccountInfo;
 import com.haozi.common.exception.ParamMissingException;
 import support.cache.KVCache;
 
