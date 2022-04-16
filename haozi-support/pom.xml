@@ -18,8 +18,12 @@
     <modules>
         <!--缓存支持-->
         <module>cache-support</module>
-        <module>cache-support-redis</module>
         <!--redis 缓存-->
+        <module>cache-support-redis</module>
+        <!--mysql 支持-->
+        <module>mysql-support</module>
+        <module>Generater</module>
+
 
     </modules>
 

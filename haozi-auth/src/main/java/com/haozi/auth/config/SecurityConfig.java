@@ -1,11 +1,14 @@
 package com.haozi.auth.config;
 
 import com.haozi.auth.authentication.handler.LoginFailure;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.servlet.ServletException;
@@ -29,15 +32,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .successForwardUrl("token")
+                .permitAll()
+                .successForwardUrl("/after_login")
                 .failureHandler(authenticationFailureHandler())
-                .permitAll();
+                .and().csrf().disable();
 
-        super.configure(http);
+
     }
 
     public AuthenticationFailureHandler authenticationFailureHandler() {
 
         return new LoginFailure();
+    }
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }
