@@ -26,6 +26,7 @@
         <module>open-fegin-support</module>
         <!--代码生成-->
         <module>Generater</module>
+        <module>global-expection-handler</module>
     </modules>
 
     <properties>

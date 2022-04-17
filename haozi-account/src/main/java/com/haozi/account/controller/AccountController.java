@@ -8,6 +8,8 @@ import com.haozi.common.exception.ParamMissingException;
 import com.haozi.common.model.ResponseResult;
 import com.haozi.common.model.dto.account.AccountInfo;
 import com.haozi.common.model.dto.account.EmailRequest;
+import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
  */
 @RestController
 @RequestMapping("/account")
+@Slf4j
 public class AccountController {
 
 
@@ -52,7 +55,7 @@ public class AccountController {
             return ResponseResult.success(null);
         }
 
-        List<String> resources = gerResourcesByUsers(users);
+        List<String> resources = getResourcesByUsers(users);
 
         AccountInfo accountInfo =
                 new AccountInfo(users.getUsername(),resources,users.getPwd(),users.getEnabled());
@@ -65,7 +68,7 @@ public class AccountController {
      * @param users
      * @return
      */
-    private List<String> gerResourcesByUsers(Users users){
+    private List<String> getResourcesByUsers(Users users){
         List<Integer> roleIdByUserName = roleService.findRoleIdByUserName(users.getUsername());
 
         if(CollUtil.isEmpty(roleIdByUserName)){

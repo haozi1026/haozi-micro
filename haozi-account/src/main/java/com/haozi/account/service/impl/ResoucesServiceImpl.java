@@ -2,6 +2,7 @@ package com.haozi.account.service.impl;
 
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.LFUCache;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.haozi.account.dao.po.Resouces;
 import com.haozi.account.dao.mapper.ResoucesMapper;
 import com.haozi.account.service.IResoucesService;
@@ -54,8 +55,12 @@ public class ResoucesServiceImpl extends ServiceImpl<ResoucesMapper, Resouces> i
             }
             needQuery.add(id);
         }
+        LambdaQueryWrapper<Resouces>
+                queryWrapper = new LambdaQueryWrapper();
 
-        List<Resouces> resouces = this.baseMapper.selectBatchIds(needQuery);
+        queryWrapper.in(Resouces::getResourcesId,needQuery);
+
+        List<Resouces> resouces = this.baseMapper.selectList(queryWrapper);
 
         for (Resouces resouce : resouces) {
             roleResourcesCache.put(resouce.getResourcesId(),resouce);

@@ -12,9 +12,11 @@ import lombok.Data;
 @AllArgsConstructor
 public class EmailRequest {
 
+    public EmailRequest(){}
+
     /**
      * 邮箱地址
      */
-    public String email;
+    private String email;
 
 }

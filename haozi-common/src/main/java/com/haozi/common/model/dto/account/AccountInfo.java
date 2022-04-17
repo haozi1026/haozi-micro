@@ -2,6 +2,7 @@ package com.haozi.common.model.dto.account;
 
 import lombok.Data;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,15 +13,18 @@ import java.util.List;
  * @date 2022/4/16 12:24 下午
  */
 @Data
-public class AccountInfo {
+public class AccountInfo implements Serializable {
 
-    public AccountInfo(String principal, List<String> permission,String pwd,byte enable) {
+
+    private static final long serialVersionUID = -367221809088185471L;
+
+    public AccountInfo(String principal, List<String> permission, String pwd, byte enable) {
         this.principal = principal;
         this.permission = permission;
         this.pwd = pwd;
         this.enable = enable;
     }
-
+    public AccountInfo(){};
     /**
      * 用户名（账户主体）
      */

@@ -16,7 +16,7 @@ public class ResponseResult<T> {
     private int code;
     private String message;
     private T data;
-
+    public ResponseResult(){};
 
     public boolean isSuccess(){
         return StatusEnum.SUCCESS.getCode() == getCode();
