@@ -12,12 +12,15 @@ import java.util.Optional;
  * @version 1.0
  * @date 2022/4/16 12:56 下午
  */
+public class KVRedis<T> implements KVCache<T> {
 
-public abstract class KVRedis<T> implements KVCache<T> {
 
-    @Autowired
     RedisTemplate<String,T> redisTemplate;
 
+    @Autowired
+    public void setRedisTemplate(RedisTemplate redisTemplate){
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
     public void cache(String key, T v, long seconds) {

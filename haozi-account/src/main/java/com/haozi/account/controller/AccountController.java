@@ -52,21 +52,30 @@ public class AccountController {
             return ResponseResult.success(null);
         }
 
-        List<Integer> roleIdByUserName = roleService.findRoleIdByUserName(users.getUsername());
+        List<String> resources = gerResourcesByUsers(users);
 
-        if(CollUtil.isEmpty(roleIdByUserName)){
-            AccountInfo accountInfo = new AccountInfo(users.getUsername(), Arrays.asList(),users.getPwd(),users.getEnabled());
-            return ResponseResult.success(accountInfo);
-        }
-
-
-        List<Resouces> resourcesByRoleId = roleResourcesService.findResourcesByRoleId(roleIdByUserName);
-
-        List<String> resourceFlag = resourcesByRoleId.stream().map(resouces -> resouces.getResourceFlag()).collect(Collectors.toList());
-
-        AccountInfo accountInfo = new AccountInfo(users.getUsername(),resourceFlag,users.getPwd(),users.getEnabled());
+        AccountInfo accountInfo =
+                new AccountInfo(users.getUsername(),resources,users.getPwd(),users.getEnabled());
 
         return ResponseResult.success(accountInfo);
     }
 
+    /**
+     * 根据用户获取资源标识
+     * @param users
+     * @return
+     */
+    private List<String> gerResourcesByUsers(Users users){
+        List<Integer> roleIdByUserName = roleService.findRoleIdByUserName(users.getUsername());
+
+        if(CollUtil.isEmpty(roleIdByUserName)){
+            return Arrays.asList();
+        }
+
+        List<Resouces> resourcesByRoleId = roleResourcesService.findResourcesByRoleId(roleIdByUserName);
+
+        List<String> resourceFlag = resourcesByRoleId.stream().map(resouces -> resouces.getResourceFlag()).collect(Collectors.toList());
+        return resourceFlag;
+
+    }
 }

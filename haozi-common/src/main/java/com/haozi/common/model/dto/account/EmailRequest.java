@@ -1,5 +1,6 @@
 package com.haozi.common.model.dto.account;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -8,6 +9,7 @@ import lombok.Data;
  * @date 2022/4/16 3:10 下午
  */
 @Data
+@AllArgsConstructor
 public class EmailRequest {
 
     /**

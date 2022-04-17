@@ -38,5 +38,9 @@ public class AccountInfo {
      * 是否可用
      */
     private byte enable;
+    /**
+     * 登录方式
+     */
+    private String loginType;
 
 }

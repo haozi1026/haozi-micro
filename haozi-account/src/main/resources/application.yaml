@@ -1,0 +1,10 @@
+server:
+  port: 8001
+spring:
+  application:
+    name: account
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://center.com:7900/eureka/

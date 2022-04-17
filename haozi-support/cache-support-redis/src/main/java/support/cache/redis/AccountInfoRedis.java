@@ -13,12 +13,15 @@ import java.util.Optional;
  * @version 1.0
  * @date 2022/4/16 1:26 下午
  */
-@Component
 public class AccountInfoRedis extends AccountInfoCache {
 
-    @Autowired
     RedisTemplate<String,AccountInfo> redisTemplate;
 
+    @Autowired
+    public void setRedisTemplate(RedisTemplate redisTemplate){
+
+        this.redisTemplate = redisTemplate;
+    }
     @Override
     public void cache(String key, AccountInfo v, long seconds) {
         redisTemplate.opsForValue().set(key,v,seconds);

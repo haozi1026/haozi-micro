@@ -17,6 +17,10 @@ public class ResponseResult<T> {
     private String message;
     private T data;
 
+
+    public boolean isSuccess(){
+        return StatusEnum.SUCCESS.getCode() == getCode();
+    }
     /**
      * 成功
       * @param data

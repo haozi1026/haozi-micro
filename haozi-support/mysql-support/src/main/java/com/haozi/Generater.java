@@ -31,7 +31,7 @@ public class Generater {
         AutoGenerator mpg = new AutoGenerator(dataSourceConfig);
         //2. 全局配置
         GlobalConfig globalConfig = new GlobalConfig.Builder()
-                .outputDir("/Users/yihaozhao/development/workspace/self/haozi-micro/haozi-account/src/main/java/")
+                .outputDir("/Users/yihaozhao/development/workspace/self/haozi-micro/haozi-auth/src/main/java/")
                 .author("haozi")
                 .dateType(DateType.TIME_PACK)
                 .commentDate("yyyy-MM-dd")
@@ -41,13 +41,13 @@ public class Generater {
 
         //包配置
         PackageConfig packageConfig = new PackageConfig.Builder()
-                .parent("com.haozi.account")
+                .parent("com.haozi.auth")
                 .entity("dao.po")
                 .service("service")
                 .serviceImpl("service.impl")
                 .mapper("dao.mapper")
                 .xml("mapper.xml")
-                .pathInfo(Collections.singletonMap(OutputFile.xml, "/Users/yihaozhao/development/workspace/self/haozi-micro/haozi-account/src/main/resources/mapper"))
+                .pathInfo(Collections.singletonMap(OutputFile.xml, "/Users/yihaozhao/development/workspace/self/haozi-micro/haozi-auth/src/main/resources/mapper"))
                 .build();
 
 
@@ -56,8 +56,8 @@ public class Generater {
                 .enableCapitalMode()
                 .enableSkipView()
                 .disableSqlFilter()
-                .addInclude("user_role,token_config,role_resources,role,resouces")
-                .addTablePrefix("t_", "c_")
+                .addInclude("token_config")
+                //.addTablePrefix("t_", "c_")
                 .entityBuilder().enableLombok().fileOverride()
                 .build();
 
