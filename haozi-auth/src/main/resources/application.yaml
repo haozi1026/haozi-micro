@@ -1,0 +1,23 @@
+eureka:
+  client:
+    service-url:
+      defaultZone: http://center.com:7900/eureka/
+
+server:
+  port: 8000
+spring:
+  application:
+    name: auth
+  datasource:
+    username: application
+    password: 19960118
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://1.15.157.125:3306/test_demo?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+  redis:
+    host: 127.0.0.1
+    port: 6379
+
+token:
+  config:
+    limit: 10
+
