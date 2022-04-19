@@ -7,7 +7,7 @@ package com.haozi.common.exception.Layer;
  * @date 2022/4/17 3:26 下午
  */
 public class LayerException extends RuntimeException {
-    LayerException(String message){
+   public LayerException(String message){
         super(message);
     }
 }

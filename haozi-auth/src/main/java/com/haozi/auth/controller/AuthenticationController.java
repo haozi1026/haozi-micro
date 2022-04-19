@@ -6,6 +6,8 @@ import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWT;
+import cn.hutool.jwt.JWTUtil;
+import cn.hutool.jwt.JWTValidator;
 import com.haozi.account.manager.AccountManager;
 import com.haozi.auth.dao.po.TokenConfig;
 import com.haozi.auth.exception.AuthException;
@@ -15,6 +17,8 @@ import com.haozi.auth.handler.SuccessLoginHandler;
 import com.haozi.auth.service.AuthService;
 import com.haozi.auth.service.ITokenConfigService;
 import com.haozi.common.constants.AuthConstants;
+import com.haozi.common.exception.Layer.LayerException;
+import com.haozi.common.exception.biz.BizException;
 import com.haozi.common.exception.internal.ConfigException;
 import com.haozi.common.exception.Layer.LayerParamException;
 import com.haozi.common.model.ResponseResult;
@@ -30,6 +34,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 /**
  * @author zyh
@@ -51,19 +56,27 @@ public class AuthenticationController {
     @Autowired
     ITokenConfigService tokenConfigService;
 
+    /**
+     * 登录
+     *
+     * @param principal 登录主体
+     * @param pwd       密码
+     * @param loginType
+     * @return
+     */
     @PostMapping("/login")
     public ResponseResult<LoginResponse> login(String principal, String pwd, String loginType) {
         AccountInfo accountInfo;
         HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
 
         if (StrUtil.isBlank(principal)) {
-            throw new LayerParamException("principal","登录");
+            throw new LayerParamException("principal", "登录");
         }
         if (StrUtil.isBlank(pwd)) {
-            throw new LayerParamException("pwd","登录");
+            throw new LayerParamException("pwd", "登录");
         }
         if (StrUtil.isBlank(loginType)) {
-            throw new LayerParamException("loginType","登录");
+            throw new LayerParamException("loginType", "登录");
         }
 
         try {
@@ -92,16 +105,86 @@ public class AuthenticationController {
         return ResponseResult.success(loginSuccess);
     }
 
+    /**
+     * 续约
+     *
+     * @param renewToken  续约token
+     * @param accessToken 访问token
+     * @return
+     */
+    @PostMapping("/renew")
+    public ResponseResult renew(String renewToken, String accessToken) {
+
+        //校验续约token
+        TokenConfig tokenConfig = tokenConfigService.tokenConfig();
+
+        if (vertifyToken(renewToken, tokenConfig.getRefreshTokenKey()) == false) {
+            throw new LayerException("续约失败，token校验异常");
+        }
+
+        String loginId = (String) JWTUtil.parseToken(accessToken)
+                .getPayload(AuthConstants.ACCESS_TOKEN_PAY_LOAD);
+
+        if (StrUtil.isBlank(loginId)) {
+            throw new LayerException("续约失败，token校验异常");
+        }
+
+        Optional<AccountInfo> optionalAccountInfo = accountManager.getAccountInfo(loginId);
+
+        AccountInfo accountInfo
+                = optionalAccountInfo.orElseThrow(() -> new LayerException("续约失败，用户信息过期"));
+
+
+        TokenInfo tokenInfo = generateTokenInfo(loginId,tokenConfig);
+        //账号信息存缓存
+        accountManager.saveAccountinfo(loginId, accountInfo, tokenConfig.getAccessTokenExp() * 2 + 3);
+
+        return ResponseResult.success(tokenInfo);
+    }
+
+
+    /**
+     * 校验token
+     *
+     * @param token
+     */
+    private boolean vertifyToken(String token, String key) {
+
+        TokenConfig tokenConfig = tokenConfigService.tokenConfig();
+
+        JWTValidator jwtValidator = JWTValidator.of(token);
+        try {
+            //校验token是否合法
+            boolean vertifyToken = JWTUtil
+                    .verify(token, key.getBytes(StandardCharsets.UTF_8));
+            if (!vertifyToken) {
+                return false;
+            }
+            JWTValidator.of(token).validateDate();
+            return true;
+        } catch (Exception ex) {
+            return false;
+        }
+    }
+
+
+    /**
+     * 生成token串
+     *
+     * @param loginId
+     * @param tokenConfig
+     * @return
+     */
     private TokenInfo generateTokenInfo(String loginId, TokenConfig tokenConfig) {
 
-        if(StrUtil.isBlank(tokenConfig.getAccessTokenKey())){
-            throw new ConfigException("jwt sign","jwt sign缺失");
+        if (StrUtil.isBlank(tokenConfig.getAccessTokenKey())) {
+            throw new ConfigException("jwt sign", "jwt sign缺失");
         }
-        if(StrUtil.isBlank(tokenConfig.getRefreshTokenKey())){
-            throw new ConfigException("jwt sign","jwt sign缺失");
+        if (StrUtil.isBlank(tokenConfig.getRefreshTokenKey())) {
+            throw new ConfigException("jwt sign", "jwt sign缺失");
         }
-        if(tokenConfig.getAccessTokenExp() == null){
-            throw new ConfigException("jwt 有效时间","jwt 有效时间缺失");
+        if (tokenConfig.getAccessTokenExp() == null) {
+            throw new ConfigException("jwt 有效时间", "jwt 有效时间缺失");
         }
 
         JWT accessToken = JWT.create()

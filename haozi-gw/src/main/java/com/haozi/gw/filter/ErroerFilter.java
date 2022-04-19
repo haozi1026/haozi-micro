@@ -17,7 +17,7 @@ import static org.springframework.cloud.netflix.zuul.filters.support.FilterConst
  * @version 1.0
  * @date 2022/4/19 1:58 下午
  */
-public class ErrorFilter extends SendErrorFilter {
+public class ErroerFilter extends SendErrorFilter {
 
     @Override
     public Object run() {
