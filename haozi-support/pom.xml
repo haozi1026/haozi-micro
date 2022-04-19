@@ -27,6 +27,7 @@
         <!--代码生成-->
         <module>Generater</module>
         <module>global-expection-handler</module>
+        <module>security-support</module>
     </modules>
 
     <properties>
