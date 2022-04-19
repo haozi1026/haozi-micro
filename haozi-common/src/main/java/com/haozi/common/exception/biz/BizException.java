@@ -1,4 +1,4 @@
-package com.haozi.common.exception;
+package com.haozi.common.exception.biz;
 
 /**
  * @author zyh

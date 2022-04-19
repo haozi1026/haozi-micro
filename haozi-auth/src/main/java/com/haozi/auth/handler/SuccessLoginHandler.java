@@ -1,8 +1,5 @@
 package com.haozi.auth.handler;
 
-import cn.hutool.core.util.StrUtil;
-import com.haozi.common.exception.ParamMissingException;
-import com.haozi.common.model.dto.account.AccountInfo;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletRequest;

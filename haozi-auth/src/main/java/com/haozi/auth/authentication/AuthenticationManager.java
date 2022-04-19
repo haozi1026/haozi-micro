@@ -3,7 +3,7 @@ package com.haozi.auth.authentication;
 import com.haozi.auth.authentication.check.AuthenticationCheck;
 import com.haozi.auth.authentication.provider.AuthProvider;
 import com.haozi.auth.authentication.token.BaseToken;
-import com.haozi.common.exception.UnsupportParamExpection;
+import com.haozi.common.exception.Layer.LayerParamException;
 import com.haozi.common.model.dto.account.AccountInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,7 +31,7 @@ public class AuthenticationManager implements IAuthenticationManager {
                 baseToken = authProvider.auth(principal, pwd);
                 break;
             }
-            throw new UnsupportParamExpection("loginType", "认证", "未找到该登录类型的处理器,检查loginType是否正确");
+            throw new LayerParamException("loginType","未找到该登录类型的处理器,检查loginType是否正确");
         }
         for (AuthenticationCheck check : checks) {
             check.check(baseToken);

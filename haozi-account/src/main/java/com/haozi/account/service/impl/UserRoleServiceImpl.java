@@ -6,7 +6,7 @@ import com.haozi.account.dao.po.UserRole;
 import com.haozi.account.dao.mapper.UserRoleMapper;
 import com.haozi.account.service.IUserRoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.haozi.common.exception.ParamMissingException;
+import com.haozi.common.exception.internal.ParamMissingException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

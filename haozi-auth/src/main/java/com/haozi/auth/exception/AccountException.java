@@ -1,6 +1,6 @@
 package com.haozi.auth.exception;
 
-import com.haozi.common.exception.BizException;
+import com.haozi.common.exception.biz.BizException;
 
 /**
  * @author zyh

@@ -1,4 +1,4 @@
-package com.haozi.common.exception;
+package com.haozi.common.exception.internal;
 
 import cn.hutool.core.util.StrUtil;
 

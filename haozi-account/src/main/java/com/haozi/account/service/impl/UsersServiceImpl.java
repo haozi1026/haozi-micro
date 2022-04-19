@@ -8,7 +8,7 @@ import com.haozi.account.dao.mapper.UsersMapper;
 import com.haozi.account.service.IRoleResourcesService;
 import com.haozi.account.service.IUsersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.haozi.common.exception.ParamMissingException;
+import com.haozi.common.exception.internal.ParamMissingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

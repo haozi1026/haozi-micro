@@ -2,14 +2,14 @@ package com.haozi.common.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.haozi.common.exception.InternalException;
+import com.haozi.common.exception.internal.InternalException;
 
 /**
  * @author zyh
  * @version 1.0
  * @date 2022/4/19 10:36 上午
  */
-public class jackSonUtil {
+public class JackSonUtil {
 
     /**
      * 对象转json

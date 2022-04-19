@@ -8,9 +8,12 @@ import cn.hutool.http.HttpStatus;
 import cn.hutool.jwt.JWT;
 import cn.hutool.jwt.JWTUtil;
 import cn.hutool.jwt.JWTValidator;
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.haozi.account.manager.AccountManager;
+import com.haozi.common.constants.AuthConstants;
+import com.haozi.common.exception.biz.AccessDeniedException;
 import com.haozi.common.model.ResponseResult;
-import com.haozi.common.util.jackSonUtil;
+import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.util.JackSonUtil;
 import com.haozi.gw.config.AnonymousConfig;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
@@ -24,6 +27,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.regex.Pattern;
 
 /**
@@ -36,8 +40,8 @@ import java.util.regex.Pattern;
 public class AuthFilter extends ZuulFilter {
 
     Pattern pattern = null;
-
-
+    @Autowired
+    AccountManager accountManager;
     @Autowired
     AnonymousConfig anonymousConfig;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -72,46 +76,38 @@ public class AuthFilter extends ZuulFilter {
         //获取目标地址
         String requestUrl = ReUtil.get(pattern, requestURL.toString(), 1);
 
-        if(isAllowAnon(requestUrl)){
+        if (isAllowAnon(requestUrl)) {
             return null;
         }
         //取访问 token
         String accessToken = currentContext.getRequest().getHeader("ACCESS-TOKEN");
 
-        if(StrUtil.isBlank(accessToken)){
-            //返回
-            accessForbidden(response);
-            return false;
+        if (StrUtil.isBlank(accessToken)) {
+            throw new AccessDeniedException(AccessDeniedException.Type.NOT_LOGIN);
         }
         //token 校验
+        JWT jwt = null;
         try {
-            JWTValidator.of(accessToken).validateDate();
-        } catch (Exception ex){
+            jwt = JWTUtil.parseToken(accessToken);
+            JWTValidator.of(jwt).validateDate();
+        } catch (Exception ex) {
             // token校验不过
-            //返回
-            accessForbidden(response);
-            return false;
+            throw new AccessDeniedException(AccessDeniedException.Type.OVERTIME);
         }
+
+        String loginId = (String) jwt.getPayload(AuthConstants.ACCESS_TOKEN_PAY_LOAD);
+
+        Optional<AccountInfo> optionalAccountInfo = accountManager.getAccountInfo(loginId);
+
+        AccountInfo accountInfo
+                = optionalAccountInfo.orElseThrow(() -> new AccessDeniedException(AccessDeniedException.Type.OVERTIME));
+
         return null;
     }
 
     /**
-     * 禁止访问
-     */
-    private void accessForbidden(HttpServletResponse response){
-
-        ResponseResult<String> responseResult = ResponseResult.fail("未登录用户禁止访问");
-        String res = jackSonUtil.toJson(responseResult);
-
-        responseResult.setCode(HttpStatus.HTTP_FORBIDDEN);
-        try {
-            response.getWriter().write(res);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-    }
-    /**
      * 是否允许匿名访问
+     *
      * @param url
      * @return
      */
@@ -123,10 +119,12 @@ public class AuthFilter extends ZuulFilter {
         }
         for (String anon : anons) {
             boolean match = antPathMatcher.match(anon, url);
-            if(match){
+            if (match) {
                 return true;
             }
         }
         return false;
     }
+
+
 }

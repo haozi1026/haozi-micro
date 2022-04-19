@@ -1,11 +1,9 @@
 package com.haozi.ex;
 
-import com.haozi.common.exception.ConfigException;
+import com.haozi.common.exception.internal.ConfigException;
 import com.haozi.common.exception.Layer.LayerException;
 import com.haozi.common.model.ResponseResult;
-import lombok.extern.apachecommons.CommonsLog;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
