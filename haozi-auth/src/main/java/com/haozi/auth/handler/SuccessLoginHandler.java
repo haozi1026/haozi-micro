@@ -1,8 +1,14 @@
 package com.haozi.auth.handler;
 
+import cn.hutool.core.collection.CollUtil;
+import com.haozi.auth.handler.success.LoginSuccessProvider;
+import com.haozi.common.model.dto.account.AccountInfo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletRequest;
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author zyh
@@ -12,13 +18,23 @@ import javax.servlet.ServletRequest;
 @Component
 public class SuccessLoginHandler {
 
+    @Autowired
+    List<LoginSuccessProvider> loginSuccessProvider;
+
     /**
      * 登录成功处理
      *
      * @param request
      */
-    public void handler(ServletRequest request, String principal) {
+    public void handler(ServletRequest request, AccountInfo accountInfo) {
 
+        if (CollUtil.isEmpty(loginSuccessProvider)) {
+            return;
+        }
+
+        for (LoginSuccessProvider successProvider : loginSuccessProvider) {
+            successProvider.handler((HttpServletRequest) request, accountInfo);
+        }
     }
 
 }

@@ -46,6 +46,21 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     }
 
     @Override
+    public Users selectByPhone(String phone) {
+        if(StrUtil.isBlank(phone)){
+            throw new ParamMissingException("email","根据email查账户信息");
+        }
+
+        LambdaQueryWrapper<Users>
+                queryWrapper = new LambdaQueryWrapper<>();
+
+        queryWrapper.eq(Users::getPhoneNumber,phone);
+
+        Users users = this.baseMapper.selectOne(queryWrapper);
+        return users;
+    }
+
+    @Override
     public Users findByUserName(String userName) {
 
         if (StrUtil.isBlank(userName)) {

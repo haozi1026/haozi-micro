@@ -88,7 +88,7 @@ public class AuthenticationController {
             return ResponseResult.success(fail);
         }
         //成功后处理
-        successLoginHandler.handler(request, principal);
+        successLoginHandler.handler(request, accountInfo);
         //token配置
         TokenConfig tokenConfig = tokenConfigService.tokenConfig();
         if (tokenConfig == null) {

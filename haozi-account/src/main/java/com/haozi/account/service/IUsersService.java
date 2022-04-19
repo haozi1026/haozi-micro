@@ -23,6 +23,12 @@ public interface IUsersService extends IService<Users> {
     Users selectByEmail(String email);
 
     /**
+     * 通过手机获取账户信息
+     * @param phone
+     * @return
+     */
+    Users selectByPhone(String phone);
+    /**
      * 通过userName 查找
      *
      * @param userName

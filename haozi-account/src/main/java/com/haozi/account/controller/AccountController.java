@@ -8,6 +8,7 @@ import com.haozi.common.exception.internal.ParamMissingException;
 import com.haozi.common.model.ResponseResult;
 import com.haozi.common.model.dto.account.AccountInfo;
 import com.haozi.common.model.dto.account.EmailRequest;
+import com.haozi.common.model.dto.account.PhoneRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -42,7 +43,7 @@ public class AccountController {
      * @return
      */
     @RequestMapping("/email")
-    public ResponseResult responseResult(@RequestBody EmailRequest emailRequest){
+    public ResponseResult accountInfoByEmail(@RequestBody EmailRequest emailRequest){
 
         if(emailRequest == null){
             throw new ParamMissingException("emailRequest","根据邮箱地址获取账户信息");
@@ -62,6 +63,31 @@ public class AccountController {
         return ResponseResult.success(accountInfo);
     }
 
+    /**
+     * 根据手机获取账户信息
+     * @param PhoneRequest 邮箱信息
+     * @return
+     */
+    @RequestMapping("/phone")
+    public ResponseResult accountInfoByPhone(@RequestBody PhoneRequest phoneRequest){
+
+        if(phoneRequest == null){
+            throw new ParamMissingException("emailRequest","根据邮箱地址获取账户信息");
+        }
+
+        Users users = usersService.selectByPhone(phoneRequest.getPhone());
+
+        if(users == null){
+            return ResponseResult.success(null);
+        }
+
+        List<String> resources = getResourcesByUsers(users);
+
+        AccountInfo accountInfo =
+                new AccountInfo(users.getUsername(),resources,users.getPwd(),users.getEnabled());
+
+        return ResponseResult.success(accountInfo);
+    }
     /**
      * 根据用户获取资源标识
      * @param users
