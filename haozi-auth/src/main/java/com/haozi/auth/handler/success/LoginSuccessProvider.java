@@ -1,6 +1,6 @@
 package com.haozi.auth.handler.success;
 
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 
 import javax.servlet.http.HttpServletRequest;
 

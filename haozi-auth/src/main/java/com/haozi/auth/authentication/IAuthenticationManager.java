@@ -1,6 +1,6 @@
 package com.haozi.auth.authentication;
 
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 
 /** 认证管理器
  * @author zyh

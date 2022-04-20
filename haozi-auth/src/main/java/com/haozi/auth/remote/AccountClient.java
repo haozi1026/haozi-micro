@@ -1,14 +1,12 @@
 package com.haozi.auth.remote;
 
 import com.haozi.common.model.ResponseResult;
-import com.haozi.common.model.dto.account.AccountInfo;
-import com.haozi.common.model.dto.account.EmailRequest;
-import com.haozi.common.model.dto.account.PhoneRequest;
+import com.haozi.common.model.dto.auth.AccountInfo;
+import com.haozi.common.model.dto.auth.EmailRequest;
+import com.haozi.common.model.dto.auth.PhoneRequest;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author zyh

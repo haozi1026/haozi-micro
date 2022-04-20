@@ -1,6 +1,6 @@
 package com.haozi.account.manager;
 
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 
 import java.util.Optional;
 

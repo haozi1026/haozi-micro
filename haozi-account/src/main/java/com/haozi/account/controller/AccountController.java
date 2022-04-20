@@ -6,9 +6,9 @@ import com.haozi.account.dao.po.Users;
 import com.haozi.account.service.*;
 import com.haozi.common.exception.internal.ParamMissingException;
 import com.haozi.common.model.ResponseResult;
-import com.haozi.common.model.dto.account.AccountInfo;
-import com.haozi.common.model.dto.account.EmailRequest;
-import com.haozi.common.model.dto.account.PhoneRequest;
+import com.haozi.common.model.dto.auth.AccountInfo;
+import com.haozi.common.model.dto.auth.EmailRequest;
+import com.haozi.common.model.dto.auth.PhoneRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,7 +33,7 @@ public class AccountController {
     @Autowired
     IUsersService usersService;
     @Autowired
-    IUserRoleService roleService;
+    IUserRoleService userRoleService;
     @Autowired
     IRoleResourcesService roleResourcesService;
 
@@ -55,17 +55,18 @@ public class AccountController {
             return ResponseResult.success(null);
         }
 
-        List<String> resources = getResourcesByUsers(users);
+        List<Integer> roleIdByUserName = userRoleService.findRoleIdByUserName(users.getUsername());
+
+        List<String> resources = getResourcesByUsers(roleIdByUserName);
 
         AccountInfo accountInfo =
-                new AccountInfo(users.getUsername(),resources,users.getPwd(),users.getEnabled());
+                new AccountInfo(users.getEmail(),resources,users.getPwd(),users.getEnabled());
 
         return ResponseResult.success(accountInfo);
     }
 
     /**
      * 根据手机获取账户信息
-     * @param PhoneRequest 邮箱信息
      * @return
      */
     @RequestMapping("/phone")
@@ -80,27 +81,32 @@ public class AccountController {
         if(users == null){
             return ResponseResult.success(null);
         }
+        List<Integer> roleIdByUserName = userRoleService.findRoleIdByUserName(users.getUsername());
 
-        List<String> resources = getResourcesByUsers(users);
+        List<String> resources = getResourcesByUsers(roleIdByUserName);
 
         AccountInfo accountInfo =
                 new AccountInfo(users.getUsername(),resources,users.getPwd(),users.getEnabled());
 
         return ResponseResult.success(accountInfo);
     }
+
+
+
+
     /**
      * 根据用户获取资源标识
-     * @param users
+     * @param roleds
      * @return
      */
-    private List<String> getResourcesByUsers(Users users){
-        List<Integer> roleIdByUserName = roleService.findRoleIdByUserName(users.getUsername());
+    private List<String> getResourcesByUsers(List<Integer> roleds){
 
-        if(CollUtil.isEmpty(roleIdByUserName)){
+
+        if(CollUtil.isEmpty(roleds)){
             return Arrays.asList();
         }
 
-        List<Resouces> resourcesByRoleId = roleResourcesService.findResourcesByRoleId(roleIdByUserName);
+        List<Resouces> resourcesByRoleId = roleResourcesService.findResourcesByRoleId(roleds);
 
         List<String> resourceFlag = resourcesByRoleId.stream().map(resouces -> resouces.getResourceFlag()).collect(Collectors.toList());
         return resourceFlag;

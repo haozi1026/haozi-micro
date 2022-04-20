@@ -4,7 +4,7 @@ import com.haozi.auth.authentication.check.AuthenticationCheck;
 import com.haozi.auth.authentication.token.BaseToken;
 import com.haozi.auth.exception.AccountException;
 import com.haozi.common.constants.AccountStatus;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 
 /**
  * @author zyh

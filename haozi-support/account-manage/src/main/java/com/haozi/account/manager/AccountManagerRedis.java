@@ -2,7 +2,7 @@ package com.haozi.account.manager;
 
 import cn.hutool.core.util.ObjectUtil;
 import cn.hutool.db.nosql.redis.RedisDS;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import org.springframework.stereotype.Service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.params.SetParams;

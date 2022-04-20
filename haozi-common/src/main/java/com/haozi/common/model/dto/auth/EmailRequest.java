@@ -1,4 +1,4 @@
-package com.haozi.common.model.dto.account;
+package com.haozi.common.model.dto.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

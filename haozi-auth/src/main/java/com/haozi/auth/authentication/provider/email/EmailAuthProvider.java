@@ -7,8 +7,8 @@ import com.haozi.auth.remote.AccountClient;
 import com.haozi.common.constants.ServiceName;
 import com.haozi.common.exception.internal.ServiceCallException;
 import com.haozi.common.model.ResponseResult;
-import com.haozi.common.model.dto.account.AccountInfo;
-import com.haozi.common.model.dto.account.EmailRequest;
+import com.haozi.common.model.dto.auth.AccountInfo;
+import com.haozi.common.model.dto.auth.EmailRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

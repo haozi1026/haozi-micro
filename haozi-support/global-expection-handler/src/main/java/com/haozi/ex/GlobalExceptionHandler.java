@@ -6,9 +6,14 @@ import com.haozi.common.exception.Layer.LayerException;
 import com.haozi.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.List;
+
 
 /**
  * @author zyh
@@ -52,5 +57,22 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ResponseResult accessDeniedException(AccessDeniedException accessDeniedException){
         return ResponseResult.fail(accessDeniedException.toString());
+    }
+
+    /**
+     * 参数校验异常
+     * @return
+     */
+    @ExceptionHandler(value = BindException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseResult bindException(BindException bindException){
+        List<FieldError> fieldErrors = bindException.getBindingResult().getFieldErrors();
+
+        StringBuilder stringBuilder = new StringBuilder();
+
+        for (FieldError fieldError : fieldErrors) {
+            stringBuilder.append(fieldError.getDefaultMessage());
+        }
+        return ResponseResult.fail(stringBuilder.toString());
     }
 }

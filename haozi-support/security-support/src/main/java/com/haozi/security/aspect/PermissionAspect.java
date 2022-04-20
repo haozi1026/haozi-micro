@@ -2,9 +2,8 @@ package com.haozi.security.aspect;
 
 import cn.hutool.core.util.StrUtil;
 import com.haozi.account.manager.AccountManager;
-import com.haozi.common.constants.AuthConstants;
 import com.haozi.common.exception.biz.AccessDeniedException;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import com.haozi.security.anon.hasPermission;
 import com.haozi.security.context.SecurityContextHolder;
 import org.aspectj.lang.JoinPoint;
@@ -20,7 +19,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.List;
-import java.util.Optional;
+
 
 /**
  * @author zyh

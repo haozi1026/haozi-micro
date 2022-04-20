@@ -1,6 +1,6 @@
 package com.haozi.auth.service;
 
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 
 /**
  * @author zyh

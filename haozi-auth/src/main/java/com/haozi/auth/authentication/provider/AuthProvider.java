@@ -1,7 +1,6 @@
 package com.haozi.auth.authentication.provider;
 
 import com.haozi.auth.authentication.token.BaseToken;
-import com.haozi.common.model.dto.account.AccountInfo;
 
 /**
  * @author zyh

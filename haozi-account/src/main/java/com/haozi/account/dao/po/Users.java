@@ -17,12 +17,10 @@ import lombok.Setter;
 @Setter
 public class Users implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     /**
      * 用户名
      */
-      private String username;
+    private String username;
 
     private String pwd;
 

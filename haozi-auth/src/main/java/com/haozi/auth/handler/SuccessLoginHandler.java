@@ -2,7 +2,7 @@ package com.haozi.auth.handler;
 
 import cn.hutool.core.collection.CollUtil;
 import com.haozi.auth.handler.success.LoginSuccessProvider;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

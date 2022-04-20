@@ -4,7 +4,7 @@ import com.haozi.auth.authentication.check.AuthenticationCheck;
 import com.haozi.auth.authentication.provider.AuthProvider;
 import com.haozi.auth.authentication.token.BaseToken;
 import com.haozi.common.exception.Layer.LayerParamException;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

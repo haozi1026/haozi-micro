@@ -1,4 +1,4 @@
-package com.haozi.common.model.dto.account;
+package com.haozi.common.model.dto.auth;
 
 import com.haozi.common.constants.LoginResult;
 import com.haozi.common.model.dto.token.TokenInfo;

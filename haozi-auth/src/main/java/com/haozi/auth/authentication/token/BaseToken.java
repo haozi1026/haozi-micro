@@ -1,6 +1,6 @@
 package com.haozi.auth.authentication.token;
 
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import lombok.Getter;
 
 /**

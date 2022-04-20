@@ -4,7 +4,7 @@ import com.haozi.auth.authentication.check.AuthenticationCheck;
 import com.haozi.auth.authentication.token.BaseToken;
 import com.haozi.auth.authentication.token.PasswordToken;
 import com.haozi.auth.exception.AuthException;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;

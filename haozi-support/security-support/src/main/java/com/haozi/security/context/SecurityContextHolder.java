@@ -1,10 +1,7 @@
 package com.haozi.security.context;
 
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import org.springframework.stereotype.Component;
-import org.springframework.util.Assert;
-
-import java.util.Optional;
 
 /**
  * @author zyh

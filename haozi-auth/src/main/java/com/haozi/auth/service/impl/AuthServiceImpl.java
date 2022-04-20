@@ -1,9 +1,8 @@
 package com.haozi.auth.service.impl;
 
 import com.haozi.auth.authentication.AuthenticationManager;
-import com.haozi.auth.exception.AuthException;
 import com.haozi.auth.service.AuthService;
-import com.haozi.common.model.dto.account.AccountInfo;
+import com.haozi.common.model.dto.auth.AccountInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
