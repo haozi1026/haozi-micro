@@ -39,6 +39,7 @@ public class ErroerFilter extends SendErrorFilter {
         HttpServletResponse response = RequestContext.getCurrentContext().getResponse();
 
         try {
+            RequestContext.getCurrentContext().setSendZuulResponse(false);
             response.getWriter().write(s);
         } catch (IOException e) {
             e.printStackTrace();

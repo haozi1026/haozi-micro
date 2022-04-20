@@ -1,10 +1,13 @@
 package com.haozi.ex;
 
+import com.haozi.common.exception.biz.AccessDeniedException;
 import com.haozi.common.exception.internal.ConfigException;
 import com.haozi.common.exception.Layer.LayerException;
 import com.haozi.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -19,15 +22,35 @@ public class GlobalExceptionHandler {
     public GlobalExceptionHandler(){
 
     }
-
+    /**
+     * 前端-后端 过程异常
+     * @param layerException
+     * @return
+     */
     @ExceptionHandler(value = LayerException.class)
     public ResponseResult layerException(LayerException layerException){
         log.error(layerException.toString());
         return ResponseResult.fail("系统繁忙，稍后重试");
     }
+    /**
+     * 配置异常
+     * @param exception
+     * @return
+     */
     @ExceptionHandler(value = ConfigException.class)
     public ResponseResult configException(ConfigException exception){
         log.error(exception.toString());
         return ResponseResult.fail("系统繁忙，稍后重试");
+    }
+
+    /**
+     * 鉴权异常
+     * @param accessDeniedException
+     * @return
+     */
+    @ExceptionHandler(value = AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseResult accessDeniedException(AccessDeniedException accessDeniedException){
+        return ResponseResult.fail(accessDeniedException.toString());
     }
 }

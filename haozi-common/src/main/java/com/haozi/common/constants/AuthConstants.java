@@ -15,4 +15,8 @@ public class AuthConstants {
      * 续约token
      */
     public final static String RENEW_TOKEN_PAY_LOAD = "loginId";
+    /**
+     * 请求头里的loginid
+     */
+    public final static String HEADER_LOGIN_ID = "loginId";
 }

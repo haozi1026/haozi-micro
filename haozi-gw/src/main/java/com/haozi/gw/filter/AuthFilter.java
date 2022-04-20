@@ -71,7 +71,6 @@ public class AuthFilter extends ZuulFilter {
     public Object run() throws ZuulException {
 
         RequestContext currentContext = RequestContext.getCurrentContext();
-        HttpServletResponse response = currentContext.getResponse();
         StringBuffer requestURL = currentContext.getRequest().getRequestURL();
         //获取目标地址
         String requestUrl = ReUtil.get(pattern, requestURL.toString(), 1);
@@ -80,8 +79,7 @@ public class AuthFilter extends ZuulFilter {
             return null;
         }
         //取访问 token
-        String accessToken = currentContext.getRequest().getHeader("ACCESS-TOKEN");
-
+        String accessToken = currentContext.getRequest().getHeader("");
         if (StrUtil.isBlank(accessToken)) {
             throw new AccessDeniedException(AccessDeniedException.Type.NOT_LOGIN);
         }
@@ -101,6 +99,8 @@ public class AuthFilter extends ZuulFilter {
 
         AccountInfo accountInfo
                 = optionalAccountInfo.orElseThrow(() -> new AccessDeniedException(AccessDeniedException.Type.OVERTIME));
+
+        currentContext.addZuulRequestHeader(AuthConstants.HEADER_LOGIN_ID,loginId);
 
         return null;
     }
