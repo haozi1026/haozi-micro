@@ -44,5 +44,11 @@ public interface IUsersService extends IService<Users> {
      */
     List<String> resourcesFlag(List<Integer> roleIds);
 
+    /**
+     * 添加用户
+     * @param userName 用户名
+     * @return
+     */
+    Users addUser(String userName);
 
 }

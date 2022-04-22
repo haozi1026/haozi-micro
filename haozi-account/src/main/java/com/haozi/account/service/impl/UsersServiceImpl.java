@@ -1,5 +1,6 @@
 package com.haozi.account.service.impl;
 
+import cn.hutool.core.date.DateTime;
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.haozi.account.dao.po.Resouces;
@@ -10,14 +11,17 @@ import com.haozi.account.service.IUsersService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.haozi.common.exception.internal.ParamMissingException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
  * <p>
- *  服务实现类
+ * 服务实现类
  * </p>
  *
  * @author haozi
@@ -28,18 +32,21 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 
     @Autowired
     IRoleResourcesService roleResourcesService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
 
     @Override
     public Users selectByEmail(String email) {
 
-        if(StrUtil.isBlank(email)){
-            throw new ParamMissingException("email","根据email查账户信息");
+        if (StrUtil.isBlank(email)) {
+            throw new ParamMissingException("email", "根据email查账户信息");
         }
 
         LambdaQueryWrapper<Users>
                 queryWrapper = new LambdaQueryWrapper<>();
 
-        queryWrapper.eq(Users::getEmail,email);
+        queryWrapper.eq(Users::getEmail, email);
 
         Users users = this.baseMapper.selectOne(queryWrapper);
         return users;
@@ -47,14 +54,14 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 
     @Override
     public Users selectByPhone(String phone) {
-        if(StrUtil.isBlank(phone)){
-            throw new ParamMissingException("email","根据email查账户信息");
+        if (StrUtil.isBlank(phone)) {
+            throw new ParamMissingException("email", "根据email查账户信息");
         }
 
         LambdaQueryWrapper<Users>
                 queryWrapper = new LambdaQueryWrapper<>();
 
-        queryWrapper.eq(Users::getPhoneNumber,phone);
+        queryWrapper.eq(Users::getPhoneNumber, phone);
 
         Users users = this.baseMapper.selectOne(queryWrapper);
         return users;
@@ -77,4 +84,22 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
 
         return resourcesFlag;
     }
+
+    @Override
+    public Users addUser(String userName) {
+
+        if (StrUtil.isBlank(userName)) {
+            throw new ParamMissingException("userName", "新增用户");
+        }
+        String pwd = passwordEncoder.encode(defaultPwd);
+
+        Users users = new Users();
+        users.setUsername(userName);
+        users.setPwd(pwd);
+
+
+        return null;
+    }
+
+    private final String defaultPwd = "11111111";
 }
