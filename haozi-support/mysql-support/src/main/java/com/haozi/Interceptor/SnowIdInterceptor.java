@@ -9,7 +9,7 @@ import org.apache.ibatis.plugin.Invocation;
  * @version 1.0
  * @date 2022/4/22 3:23 下午
  */
-public class SnowId implements Interceptor {
+public class SnowIdInterceptor implements Interceptor {
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
