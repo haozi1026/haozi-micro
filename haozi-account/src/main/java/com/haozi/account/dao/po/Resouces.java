@@ -3,6 +3,8 @@ package com.haozi.account.dao.po;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+
+import com.haozi.annotation.SnowId;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,8 +22,8 @@ public class Resouces implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-      private Integer resourcesId;
-
+    @SnowId
+    private Long resourcesId;
     /**
      * 资源名
      */
@@ -30,18 +32,18 @@ public class Resouces implements Serializable {
     /**
      * 父级id
      */
-    private Integer parentId;
+    private long parentId;
 
     /**
      * 类型 类型0:按钮 1：菜单
      */
     @TableField("`type`")
-    private Integer type;
+    private byte type;
 
     /**
      * 删除标识
      */
-    private Integer isDel;
+    private byte isDel;
 
     /**
      * 请求地址

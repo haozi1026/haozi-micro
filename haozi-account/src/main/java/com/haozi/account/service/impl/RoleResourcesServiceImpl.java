@@ -64,7 +64,7 @@ public class RoleResourcesServiceImpl extends ServiceImpl<RoleResourcesMapper, R
 
         List<RoleResources> roleResources = this.baseMapper.selectList(wrapper);
 
-        List<Integer> resourceId = roleResources.stream().map(RoleResources::getResourceId).collect(Collectors.toList());
+        List<Long> resourceId = roleResources.stream().map(RoleResources::getResourceId).collect(Collectors.toList());
 
         List<Resouces> resourcesById = resoucesService.findResourcesById(resourceId);
 

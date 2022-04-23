@@ -1,20 +1,22 @@
 package com.haozi.account.service.impl;
 
+
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.LFUCache;
-import cn.hutool.core.lang.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.haozi.account.dao.po.Resouces;
 import com.haozi.account.dao.mapper.ResoucesMapper;
 import com.haozi.account.model.dto.ResourcesRequestDTO;
 import com.haozi.account.service.IResoucesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.haozi.common.exception.internal.ParamMissingException;
+import com.haozi.common.util.ValidationUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <p>
@@ -27,11 +29,13 @@ import java.util.List;
 @Service
 public class ResoucesServiceImpl extends ServiceImpl<ResoucesMapper, Resouces> implements IResoucesService {
 
-    LFUCache<Integer, Resouces> roleResourcesCache
+    LFUCache<Long, Resouces> roleResourcesCache
             = CacheUtil.newLFUCache(200);
 
+
+
     @Override
-    public Resouces findResourcesById(Integer resourceId) {
+    public Resouces findResourcesById(Long resourceId) {
 
         Resouces resoucesCache = roleResourcesCache.get(resourceId);
 
@@ -46,11 +50,11 @@ public class ResoucesServiceImpl extends ServiceImpl<ResoucesMapper, Resouces> i
 
 
     @Override
-    public List<Resouces> findResourcesById(List<Integer> resourceId) {
+    public List<Resouces> findResourcesById(List<Long> resourceId) {
 
         List<Resouces> resoucesList = new ArrayList<>();
-        List<Integer> needQuery = new ArrayList<>();
-        for (Integer id : resourceId) {
+        List<Long> needQuery = new ArrayList<>();
+        for (Long id : resourceId) {
 
             Resouces resouces = roleResourcesCache.get(id);
             if(resouces!=null){
@@ -77,12 +81,18 @@ public class ResoucesServiceImpl extends ServiceImpl<ResoucesMapper, Resouces> i
     @Override
     public Resouces add(ResourcesRequestDTO resoucesDTO) {
 
+        ParamMissingException illegalEx = ValidationUtil.verifyJsr303(resoucesDTO, "新增资源");
+
+        if(illegalEx!=null){
+            throw illegalEx;
+        }
+
+
         Resouces resouces = new Resouces();
         BeanUtils.copyProperties(resoucesDTO,resouces);
         resouces.setCreateTime(LocalDateTime.now());
         resouces.setUpdateTime(LocalDateTime.now());
         this.baseMapper.insert(resouces);
-
         return resouces;
     }
 

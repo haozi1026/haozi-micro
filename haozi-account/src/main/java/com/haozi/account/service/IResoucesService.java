@@ -21,14 +21,14 @@ public interface IResoucesService extends IService<Resouces> {
      * @param resourceId
      * @return
      */
-    Resouces findResourcesById(Integer resourceId);
+    Resouces findResourcesById(Long resourceId);
 
     /**
      * 通过资源名获取资源id
      * @param resourceId
      * @return
      */
-    List<Resouces> findResourcesById(List<Integer> resourceId);
+    List<Resouces> findResourcesById(List<Long> resourceId);
 
     /**
      * 添加
