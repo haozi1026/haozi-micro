@@ -1,9 +1,12 @@
 package com.haozi.account.controller;
 
 import com.haozi.account.service.IUsersService;
+import com.haozi.common.exception.biz.BizException;
 import com.haozi.common.model.ResponseResult;
 import com.haozi.common.model.dto.user.AddUserDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,17 +23,20 @@ import org.springframework.stereotype.Controller;
  */
 @Controller
 @RequestMapping("/users")
+@Slf4j
 public class UsersController {
 
     @Autowired
     IUsersService usersService;
 
-    @PostMapping("add")
+    @PostMapping("/add")
     public ResponseResult<String> addUser(@RequestBody @Validated AddUserDTO addUserDTO){
 
-        usersService.addUser(addUserDTO.getUserName());
-
-
+        try {
+            usersService.addUser(addUserDTO.getUserName());
+        } catch (DuplicateKeyException exception){
+            throw new BizException("用户名重复");
+        }
         return null;
     }
 }

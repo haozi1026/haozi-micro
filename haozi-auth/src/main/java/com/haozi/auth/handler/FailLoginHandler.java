@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class FailLoginHandler {
 
-    @Autowired
+    @Autowired(required = false)
     List<LoginFailProvider> loginFailProviders;
 
     /**

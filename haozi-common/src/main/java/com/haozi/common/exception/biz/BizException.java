@@ -7,7 +7,17 @@ package com.haozi.common.exception.biz;
  */
 public class BizException extends RuntimeException {
 
+    private String message;
     public BizException(){
         super("业务异常");
+    }
+    public BizException(String message){
+        super(message);
+        this.message = message;
+    }
+
+    @Override
+    public String toString() {
+        return message;
     }
 }

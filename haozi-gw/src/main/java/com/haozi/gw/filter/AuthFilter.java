@@ -41,10 +41,12 @@ public class AuthFilter extends ZuulFilter {
     AnonymousConfig anonymousConfig;
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
-    public AuthFilter(ZuulProperties zuulProperties) {
-        String prefix = zuulProperties.getPrefix();
-        String regStr = prefix + "(.*)";
-        pattern = Pattern.compile(regStr);
+
+    public AuthFilter() {
+       // ZuulProperties zuulProperties
+//        String prefix = zuulProperties.getPrefix();
+//        String regStr = prefix + "(.*)";
+//        pattern = Pattern.compile(regStr);
     }
 
     @Override

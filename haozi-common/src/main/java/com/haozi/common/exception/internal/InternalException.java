@@ -18,6 +18,9 @@ public class InternalException extends RuntimeException {
     public InternalException(){
         super("系统内部异常");
     }
+    public InternalException(Throwable cause){
+        super(cause);
+    }
 
     @Override
     public String toString() {

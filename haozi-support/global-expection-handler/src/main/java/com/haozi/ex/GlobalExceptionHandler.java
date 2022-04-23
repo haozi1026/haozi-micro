@@ -1,8 +1,10 @@
 package com.haozi.ex;
 
 import com.haozi.common.exception.biz.AccessDeniedException;
+import com.haozi.common.exception.biz.BizException;
 import com.haozi.common.exception.internal.ConfigException;
 import com.haozi.common.exception.Layer.LayerException;
+import com.haozi.common.exception.internal.InternalException;
 import com.haozi.common.model.ResponseResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -75,4 +77,28 @@ public class GlobalExceptionHandler {
         }
         return ResponseResult.fail(stringBuilder.toString());
     }
+
+    /**
+     * 内部错误异常
+     * @param internalException
+     * @return
+     */
+    @ExceptionHandler(InternalException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseResult internaleException(InternalException internalException){
+        log.error(internalException.toString());
+        return ResponseResult.fail("服务器异常");
+    }
+
+    /**
+     * 业务异常
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(BizException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseResult bizException(BizException exception){
+        return ResponseResult.fail(exception.toString());
+    }
 }
+

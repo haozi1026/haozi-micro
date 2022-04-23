@@ -97,6 +97,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         users.setUsername(userName);
         users.setPwd(pwd);
 
+        this.baseMapper.insert(users);
 
         return null;
     }

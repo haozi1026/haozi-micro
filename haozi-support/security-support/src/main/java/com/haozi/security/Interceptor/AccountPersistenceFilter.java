@@ -22,7 +22,7 @@ import java.util.Optional;
  * @version 1.0
  * @date 2022/4/20 11:39 上午
  */
-@Component
+//@Component
 public class AccountPersistenceFilter extends GenericFilterBean {
 
     @Autowired

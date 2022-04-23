@@ -10,7 +10,9 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.aspectj.weaver.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -27,7 +29,8 @@ import java.util.List;
  * @date 2022/4/19 5:13 下午
  */
 @Aspect
-@Component
+//@Component
+@ConditionalOnClass(Advice.class)
 public class PermissionAspect {
 
     @Autowired

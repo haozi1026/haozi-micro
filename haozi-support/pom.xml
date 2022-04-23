@@ -16,17 +16,13 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <!--缓存支持-->
-        <module>cache-support</module>
-        <!--redis 缓存-->
-        <module>cache-support-redis</module>
         <!--mysql 支持-->
         <module>mysql-support</module>
         <!--open-fegin支持-->
         <module>open-fegin-support</module>
-        <!--代码生成-->
-        <module>Generater</module>
+        <!--全局异常处理-->
         <module>global-expection-handler</module>
+        <!--安全模块-->
         <module>security-support</module>
     </modules>
 
