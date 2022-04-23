@@ -2,6 +2,7 @@ package com.haozi.account.service;
 
 import com.haozi.account.dao.po.Resouces;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.haozi.account.model.dto.ResourcesRequestDTO;
 
 import java.util.List;
 
@@ -29,5 +30,11 @@ public interface IResoucesService extends IService<Resouces> {
      */
     List<Resouces> findResourcesById(List<Integer> resourceId);
 
+    /**
+     * 添加
+     * @param resoucesDTO
+     * @return
+     */
+    Resouces add(ResourcesRequestDTO resoucesDTO);
 
 }

@@ -8,7 +8,7 @@ import lombok.Setter;
 
 /**
  * <p>
- * 
+ *
  * </p>
  *
  * @author haozi
@@ -33,7 +33,7 @@ public class Resouces implements Serializable {
     private Integer parentId;
 
     /**
-     * 类型
+     * 类型 类型0:按钮 1：菜单
      */
     @TableField("`type`")
     private Integer type;

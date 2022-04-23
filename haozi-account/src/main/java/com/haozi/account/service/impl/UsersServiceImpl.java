@@ -96,6 +96,8 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
         Users users = new Users();
         users.setUsername(userName);
         users.setPwd(pwd);
+        users.setCreateTime(LocalDateTime.now());
+        users.setUpdateTime(LocalDateTime.now());
 
         this.baseMapper.insert(users);
 

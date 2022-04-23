@@ -37,6 +37,6 @@ public class UsersController {
         } catch (DuplicateKeyException exception){
             throw new BizException("用户名重复");
         }
-        return null;
+        return ResponseResult.success("新增成功");
     }
 }

@@ -2,13 +2,17 @@ package com.haozi.account.service.impl;
 
 import cn.hutool.cache.CacheUtil;
 import cn.hutool.cache.impl.LFUCache;
+import cn.hutool.core.lang.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.haozi.account.dao.po.Resouces;
 import com.haozi.account.dao.mapper.ResoucesMapper;
+import com.haozi.account.model.dto.ResourcesRequestDTO;
 import com.haozi.account.service.IResoucesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +72,18 @@ public class ResoucesServiceImpl extends ServiceImpl<ResoucesMapper, Resouces> i
         }
 
         return resoucesList;
+    }
+
+    @Override
+    public Resouces add(ResourcesRequestDTO resoucesDTO) {
+
+        Resouces resouces = new Resouces();
+        BeanUtils.copyProperties(resoucesDTO,resouces);
+        resouces.setCreateTime(LocalDateTime.now());
+        resouces.setUpdateTime(LocalDateTime.now());
+        this.baseMapper.insert(resouces);
+
+        return resouces;
     }
 
 }
