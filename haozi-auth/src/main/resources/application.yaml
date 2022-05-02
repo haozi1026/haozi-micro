@@ -4,7 +4,7 @@ eureka:
       defaultZone: http://center.com:7900/eureka/
 
 server:
-  port: 8000
+  port: 8001
 spring:
   application:
     name: auth

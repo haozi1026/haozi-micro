@@ -1,0 +1,30 @@
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://center.com:7900/eureka/
+
+spring:
+  application:
+    name: gw
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: auth
+          uri: lb://auth
+          predicates:
+            Path=/gw/auth/**
+          filters:
+            - StripPrefix=2
+
+gw:
+  anon:
+    urls:
+      - /gw/auth/authentication/login
+
+server:
+  port: 8000
+
