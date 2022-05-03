@@ -25,6 +25,10 @@ public class Role implements Serializable {
      * 角色名
      */
     private String roleName;
+    /**
+     * 角色描述
+     */
+    private String roleDesc;
 
     private LocalDateTime createTime;
 
