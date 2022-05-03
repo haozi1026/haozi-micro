@@ -1,6 +1,5 @@
 package com.haozi.common.util;
 
-import com.haozi.common.exception.internal.ParamException;
 import com.haozi.common.exception.internal.ParamMissingException;
 
 import javax.validation.ConstraintViolation;

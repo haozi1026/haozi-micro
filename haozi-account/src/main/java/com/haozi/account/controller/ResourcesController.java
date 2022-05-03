@@ -1,10 +1,8 @@
 package com.haozi.account.controller;
 
-import com.haozi.account.dao.po.Resouces;
 import com.haozi.account.model.dto.ResourcesRequestDTO;
 import com.haozi.account.service.IResoucesService;
 import com.haozi.common.model.ResponseResult;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;

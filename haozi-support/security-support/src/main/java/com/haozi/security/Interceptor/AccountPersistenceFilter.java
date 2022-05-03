@@ -6,7 +6,6 @@ import com.haozi.common.constants.AuthConstants;
 import com.haozi.common.model.dto.auth.AccountInfo;
 import com.haozi.security.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;

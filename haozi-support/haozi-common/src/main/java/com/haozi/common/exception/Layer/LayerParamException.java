@@ -1,7 +1,6 @@
 package com.haozi.common.exception.Layer;
 
 import cn.hutool.core.util.StrUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author zyh

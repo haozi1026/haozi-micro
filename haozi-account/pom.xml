@@ -7,7 +7,6 @@
         <artifactId>haozi-parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <groupId>com.haozi</groupId>
     <artifactId>haozi-account</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>haozi-account</name>
