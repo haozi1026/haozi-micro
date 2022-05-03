@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
  * @version 1.0
  * @date 2022/4/19 5:02 下午
  */
-@Target({ElementType.FIELD})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface hasPermission {
 
@@ -20,5 +20,4 @@ public @interface hasPermission {
      */
     String resourceFlag();
 
-    String value();
 }

@@ -53,7 +53,7 @@ public class UsersServiceImpl extends ServiceImpl<UsersMapper, Users> implements
     @Override
     public Users selectByPhone(String phone) {
         if (StrUtil.isBlank(phone)) {
-            throw new ParamMissingException("email", "根据email查账户信息");
+            throw new ParamMissingException("phone", "根据phone查账户信息");
         }
 
         LambdaQueryWrapper<Users>

@@ -13,3 +13,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://center.com:7900/eureka/
+
+logging:
+  level:
+    com.haozi.account.dao.mapper: debug
+

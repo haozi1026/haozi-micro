@@ -8,9 +8,9 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <groupId>com.haozi</groupId>
-    <artifactId>account-manage</artifactId>
+    <artifactId>login-manage</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>account-manage</name>
+    <name>login-manage</name>
     <description>Demo project for Spring Boot</description>
     <properties>
         <java.version>1.8</java.version>

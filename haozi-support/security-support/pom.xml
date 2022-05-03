@@ -18,7 +18,7 @@
     <dependencies>
         <dependency>
             <groupId>com.haozi</groupId>
-            <artifactId>account-manage</artifactId>
+            <artifactId>login-manage</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>

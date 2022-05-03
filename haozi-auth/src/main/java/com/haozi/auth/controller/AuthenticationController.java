@@ -84,7 +84,7 @@ public class AuthenticationController {
         } catch (AuthException | NoUserException exception) {
             failLoginHandler.handler(request, principal);
             LoginResponse fail = LoginResponse.fail();
-            return ResponseResult.success(fail);
+            return ResponseResult.fail(fail);
         }
         //成功后处理
         successLoginHandler.handler(request, accountInfo);
@@ -118,21 +118,24 @@ public class AuthenticationController {
         TokenConfig tokenConfig = tokenConfigService.tokenConfig();
 
         if (vertifyToken(renewToken, tokenConfig.getRefreshTokenKey()) == false) {
-            throw new LayerException("续约失败，token校验异常");
+            return ResponseResult.fail("登录超时，请重新登录");
         }
 
         String loginId = (String) JWTUtil.parseToken(accessToken)
                 .getPayload(AuthConstants.ACCESS_TOKEN_PAY_LOAD);
 
         if (StrUtil.isBlank(loginId)) {
-            throw new LayerException("续约失败，token校验异常");
+            return ResponseResult.fail("登录超时，请重新登录");
         }
 
         Optional<AccountInfo> optionalAccountInfo = accountManager.getAccountInfo(loginId);
 
         AccountInfo accountInfo
-                = optionalAccountInfo.orElseThrow(() -> new LayerException("续约失败，用户信息过期"));
+                = optionalAccountInfo.orElse(null);
 
+        if(accountInfo == null){
+            return ResponseResult.fail("登录超时，请重新登录");
+        }
 
         TokenInfo tokenInfo = generateTokenInfo(loginId,tokenConfig);
         //账号信息存缓存
@@ -150,8 +153,6 @@ public class AuthenticationController {
     private boolean vertifyToken(String token, String key) {
 
         TokenConfig tokenConfig = tokenConfigService.tokenConfig();
-
-        JWTValidator jwtValidator = JWTValidator.of(token);
         try {
             //校验token是否合法
             boolean vertifyToken = JWTUtil

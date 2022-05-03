@@ -26,7 +26,7 @@ public class AccountManagerRedis implements AccountManager {
         byte[] bytes = ObjectUtil.serialize(accountInfo);
         String key = generateKey(loginId);
         SetParams setParams = new SetParams();
-        setParams.exAt(minute*60);
+        setParams.ex(minute*60);
         jedis.set(key.getBytes(StandardCharsets.UTF_8), bytes,setParams);
     }
 

@@ -3,6 +3,7 @@ package com.haozi.account.controller;
 import com.haozi.account.model.dto.ResourcesRequestDTO;
 import com.haozi.account.service.IResoucesService;
 import com.haozi.common.model.ResponseResult;
+import com.haozi.security.anon.hasPermission;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,6 +28,7 @@ public class ResourcesController {
      * @return
      */
     @PostMapping("/add")
+    @hasPermission(resourceFlag = "resources.add")
     public ResponseResult<String> add(@RequestBody  @Validated ResourcesRequestDTO resourcesRequest){
         resoucesService.add(resourcesRequest);
         return ResponseResult.success("新增成功");

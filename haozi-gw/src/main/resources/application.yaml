@@ -19,11 +19,20 @@ spring:
             Path=/gw/auth/**
           filters:
             - StripPrefix=2
+        - id: account
+          uri: lb://account
+          predicates:
+            Path=/gw/account/**
+          filters:
+            - StripPrefix=2
 
 gw:
   anon:
     urls:
+      # 登录
       - /gw/auth/authentication/login
+      # token续约
+      - /gw/auth/authentication/renew
 
 server:
   port: 8000

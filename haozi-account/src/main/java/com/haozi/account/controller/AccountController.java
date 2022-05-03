@@ -73,7 +73,7 @@ public class AccountController {
     public ResponseResult accountInfoByPhone(@RequestBody PhoneRequest phoneRequest){
 
         if(phoneRequest == null){
-            throw new ParamMissingException("emailRequest","根据邮箱地址获取账户信息");
+            throw new ParamMissingException("phone","根据手机获取账户信息");
         }
 
         Users users = usersService.selectByPhone(phoneRequest.getPhone());

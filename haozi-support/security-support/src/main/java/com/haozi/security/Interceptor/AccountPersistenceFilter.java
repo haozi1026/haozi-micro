@@ -6,6 +6,7 @@ import com.haozi.common.constants.AuthConstants;
 import com.haozi.common.model.dto.auth.AccountInfo;
 import com.haozi.security.context.SecurityContextHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -21,7 +22,7 @@ import java.util.Optional;
  * @version 1.0
  * @date 2022/4/20 11:39 上午
  */
-//@Component
+@Component
 public class AccountPersistenceFilter extends GenericFilterBean {
 
     @Autowired
@@ -34,6 +35,7 @@ public class AccountPersistenceFilter extends GenericFilterBean {
         HttpServletRequest httpServletRequest= (HttpServletRequest)servletRequest;
         String loginId = httpServletRequest.getHeader(AuthConstants.HEADER_LOGIN_ID);
         if(StrUtil.isBlank(loginId)){
+            filterChain.doFilter(servletRequest,servletResponse);
             return;
         }
         Optional<AccountInfo> optionalAccountInfo = accountManager.getAccountInfo(loginId);
