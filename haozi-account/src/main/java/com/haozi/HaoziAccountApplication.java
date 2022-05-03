@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @MapperScan(basePackages = "com.haozi.account.dao.mapper")
+@EnableAspectJAutoProxy
 public class HaoziAccountApplication {
 
     public static void main(String[] args) {

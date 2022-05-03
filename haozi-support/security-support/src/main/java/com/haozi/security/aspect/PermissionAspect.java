@@ -8,11 +8,13 @@ import com.haozi.security.anon.hasPermission;
 import com.haozi.security.context.SecurityContextHolder;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.aspectj.weaver.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -28,7 +30,7 @@ import java.util.List;
  * @date 2022/4/19 5:13 下午
  */
 @Aspect
-//@Component
+@Component
 @ConditionalOnClass(Advice.class)
 public class PermissionAspect {
 
@@ -38,6 +40,11 @@ public class PermissionAspect {
     SecurityContextHolder securityContextHolder;
 
     @Pointcut("@annotation(com.haozi.security.anon.hasPermission)")
+    public void pointcout(){
+
+    }
+
+    @Before("pointcout()")
     public void annonPoint(JoinPoint joinPoint) {
 
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -46,7 +53,7 @@ public class PermissionAspect {
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
 
         hasPermission annotation = method.getAnnotation(hasPermission.class);
-        String resourceFlag = annotation.resourceFlag();
+        String resourceFlag = annotation.value();
 
         if (StrUtil.isBlank(resourceFlag)) {
             return;

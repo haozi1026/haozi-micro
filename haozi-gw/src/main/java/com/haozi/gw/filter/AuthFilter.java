@@ -20,6 +20,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -83,7 +84,8 @@ public class AuthFilter implements GlobalFilter, Ordered {
             exchange.getResponse().setRawStatusCode(HttpStatus.HTTP_FORBIDDEN);
             return writeMsg(exchange.getResponse(), loginOutTime);
         }
-
+        ServerHttpRequest.Builder mutate = exchange.getRequest().mutate();
+        mutate.header(AuthConstants.HEADER_LOGIN_ID,loginId);
         return chain.filter(exchange);
     }
 

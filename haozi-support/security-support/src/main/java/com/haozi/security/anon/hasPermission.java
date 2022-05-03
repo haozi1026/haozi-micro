@@ -18,6 +18,6 @@ public @interface hasPermission {
      * 资源标识符
      * @return
      */
-    String resourceFlag();
+    String value();
 
 }

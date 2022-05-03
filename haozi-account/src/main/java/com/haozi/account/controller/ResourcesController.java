@@ -28,7 +28,7 @@ public class ResourcesController {
      * @return
      */
     @PostMapping("/add")
-    @hasPermission(resourceFlag = "resources.add")
+    @hasPermission("resources.add")
     public ResponseResult<String> add(@RequestBody  @Validated ResourcesRequestDTO resourcesRequest){
         resoucesService.add(resourcesRequest);
         return ResponseResult.success("新增成功");
