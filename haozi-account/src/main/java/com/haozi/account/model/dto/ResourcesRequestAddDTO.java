@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
  * @date 2022/4/23 10:57 上午
  */
 @Data
-public class ResourcesRequestDTO {
+public class ResourcesRequestAddDTO {
     /**
      * 资源名
      */

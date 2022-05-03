@@ -18,11 +18,12 @@ public class AccountInfo implements Serializable {
 
     private static final long serialVersionUID = -367221809088185471L;
 
-    public AccountInfo(String principal, List<String> permission, String pwd, byte enable) {
+    public AccountInfo(String principal, List<String> permission,List<String> roleName, String pwd, byte enable) {
         this.principal = principal;
         this.permission = permission;
         this.pwd = pwd;
         this.enable = enable;
+        this.roleName = roleName;
     }
     public AccountInfo(){};
     /**
@@ -33,7 +34,10 @@ public class AccountInfo implements Serializable {
      * 权限
      */
     private List<String> permission;
-
+    /**
+     * 角色
+     */
+    private List<String> roleName;
     /**
      * 密码
      */

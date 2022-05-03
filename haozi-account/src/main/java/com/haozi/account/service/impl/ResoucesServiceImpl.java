@@ -6,7 +6,7 @@ import cn.hutool.cache.impl.LFUCache;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.haozi.account.dao.po.Resouces;
 import com.haozi.account.dao.mapper.ResoucesMapper;
-import com.haozi.account.model.dto.ResourcesRequestDTO;
+import com.haozi.account.model.dto.ResourcesRequestAddDTO;
 import com.haozi.account.service.IResoucesService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.haozi.common.exception.internal.ParamMissingException;
@@ -78,7 +78,7 @@ public class ResoucesServiceImpl extends ServiceImpl<ResoucesMapper, Resouces> i
     }
 
     @Override
-    public Resouces add(ResourcesRequestDTO resoucesDTO) {
+    public Resouces add(ResourcesRequestAddDTO resoucesDTO) {
 
         ParamMissingException illegalEx = ValidationUtil.verifyJsr303(resoucesDTO, "新增资源");
 

@@ -1,21 +1,17 @@
 package com.haozi.security.aspect;
 
 import cn.hutool.core.collection.CollUtil;
-import cn.hutool.core.util.StrUtil;
 import com.haozi.account.manager.AccountManager;
 import com.haozi.common.exception.biz.AccessDeniedException;
 import com.haozi.common.model.dto.auth.AccountInfo;
 import com.haozi.security.anon.hasPermission;
+import com.haozi.security.anon.hasRole;
 import com.haozi.security.context.SecurityContextHolder;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.aspectj.weaver.Advice;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -24,52 +20,47 @@ import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.List;
 
-
 /**
  * @author zyh
  * @version 1.0
- * @date 2022/4/19 5:13 下午
+ * @date 2022/5/3 2:45 下午
  */
-@Aspect
-@Component
-@ConditionalOnClass(Advice.class)
-public class PermissionAspect {
+public class RoleAspect {
 
     @Autowired
     AccountManager accountManager;
     @Autowired
     SecurityContextHolder securityContextHolder;
 
-    @Pointcut("@annotation(com.haozi.security.anon.hasPermission)")
+    @Pointcut("@annotation(com.haozi.security.anon.hasRole)")
     public void pointcout() {
 
     }
 
     @Before("pointcout()")
     public void execute(JoinPoint joinPoint) {
-
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
         Method method = methodSignature.getMethod();
+        hasRole annotation = method.getAnnotation(hasRole.class);
+        String role = annotation.value();
 
-        hasPermission annotation = method.getAnnotation(hasPermission.class);
-        String resourceFlag = annotation.value();
-
-        if (StrUtil.isBlank(resourceFlag)) {
-            return;
-        }
         //取当前登录账户信息
         AccountInfo context = securityContextHolder.getContext();
         if (context == null) {
             throw new AccessDeniedException(AccessDeniedException.Type.NOT_LOGIN);
         }
-        List<String> permissions = context.getPermission();
 
-        if (CollUtil.isEmpty(permissions)) {
+
+        List<String> roleNames = context.getRoleName();
+
+        if (CollUtil.isEmpty(roleNames)) {
             throw new AccessDeniedException(AccessDeniedException.Type.UNAUTHORIZED);
         }
 
-        boolean hasPermission = permissions.stream().anyMatch(permission -> permission.equals(resourceFlag));
-        if (hasPermission) {
+
+        boolean hasRole = roleNames.stream().anyMatch(roleName -> roleName.equals(role));
+
+        if(hasRole){
             return;
         }
         throw new AccessDeniedException(AccessDeniedException.Type.UNAUTHORIZED);

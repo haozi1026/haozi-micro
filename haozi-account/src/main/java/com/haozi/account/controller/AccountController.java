@@ -2,6 +2,7 @@ package com.haozi.account.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.haozi.account.dao.po.Resouces;
+import com.haozi.account.dao.po.Role;
 import com.haozi.account.dao.po.Users;
 import com.haozi.account.service.*;
 import com.haozi.common.exception.internal.ParamMissingException;
@@ -33,6 +34,8 @@ public class AccountController {
     @Autowired
     IUsersService usersService;
     @Autowired
+    IRoleService roleService;
+    @Autowired
     IUserRoleService userRoleService;
     @Autowired
     IRoleResourcesService roleResourcesService;
@@ -54,14 +57,7 @@ public class AccountController {
         if(users == null){
             return ResponseResult.success(null);
         }
-
-        List<Integer> roleIdByUserName = userRoleService.findRoleIdByUserName(users.getUsername());
-
-        List<String> resources = getResourcesByUsers(roleIdByUserName);
-
-        AccountInfo accountInfo =
-                new AccountInfo(users.getEmail(),resources,users.getPwd(),users.getEnabled());
-
+        AccountInfo accountInfo = userAccountInfoAdapter(users);
         return ResponseResult.success(accountInfo);
     }
 
@@ -81,19 +77,26 @@ public class AccountController {
         if(users == null){
             return ResponseResult.success(null);
         }
-        List<Integer> roleIdByUserName = userRoleService.findRoleIdByUserName(users.getUsername());
-
-        List<String> resources = getResourcesByUsers(roleIdByUserName);
-
-        AccountInfo accountInfo =
-                new AccountInfo(users.getUsername(),resources,users.getPwd(),users.getEnabled());
+        AccountInfo accountInfo = userAccountInfoAdapter(users);
 
         return ResponseResult.success(accountInfo);
     }
 
+    /**
+     * user 对象与AccountInfo 适配器
+     * @return
+     */
+    private AccountInfo userAccountInfoAdapter(Users user){
+        List<Integer> roleIdByUserName = userRoleService.findRoleIdByUserName(user.getUsername());
 
+        List<Role> roleByIds = roleService.findRoleByIds(roleIdByUserName);
+        List<String> roleName = roleByIds.stream().map(role -> role.getRoleName()).collect(Collectors.toList());
 
-
+        List<String> resources = getResourcesByUsers(roleIdByUserName);
+        AccountInfo accountInfo =
+                new AccountInfo(user.getUsername(),resources,roleName,user.getPwd(),user.getEnabled());
+        return accountInfo;
+    }
     /**
      * 根据用户获取资源标识
      * @param roleds
