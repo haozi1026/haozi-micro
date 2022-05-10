@@ -29,11 +29,10 @@ public class ResourcesController {
      * @return
      */
     @PostMapping("/add")
-    @hasRole("")
+    @hasRole("admin")
     public ResponseResult<String> add(@RequestBody  @Validated ResourcesRequestAddDTO resourcesRequest){
         resoucesService.add(resourcesRequest);
         return ResponseResult.success("新增成功");
     }
-
 
 }

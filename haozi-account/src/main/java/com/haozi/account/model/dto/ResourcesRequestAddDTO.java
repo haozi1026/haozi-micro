@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.lang.NonNull;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -16,7 +17,7 @@ public class ResourcesRequestAddDTO {
     /**
      * 资源名
      */
-    @NotBlank(message = "资源名不能为空")
+    @NotEmpty(message = "资源名不能为空")
     private String resourceName;
 
     /**
@@ -26,7 +27,7 @@ public class ResourcesRequestAddDTO {
     /**
      * 菜单类型 类型0:按钮 1：菜单
      */
-    @NotNull(message = "菜单类型不能为空")
+    @NotEmpty(message = "菜单类型不能为空")
     private Integer type;
 
     /**

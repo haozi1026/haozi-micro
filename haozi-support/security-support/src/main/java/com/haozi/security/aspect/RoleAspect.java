@@ -56,8 +56,6 @@ public class RoleAspect {
         if (CollUtil.isEmpty(roleNames)) {
             throw new AccessDeniedException(AccessDeniedException.Type.UNAUTHORIZED);
         }
-
-
         boolean hasRole = roleNames.stream().anyMatch(roleName -> roleName.equals(role));
 
         if(hasRole){

@@ -30,4 +30,11 @@ public interface IRoleResourcesService extends IService<RoleResources> {
      */
     List<Resouces> findResourcesByRoleId(Integer roleids);
 
+    /**
+     * 绑定角色-资源
+     * @param roleId
+     * @param resourceIdList
+     */
+    void bindRoleResources(Long roleId,List<Long> resourceIdList);
+
 }
